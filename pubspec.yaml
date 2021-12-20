@@ -33,6 +33,7 @@ dependencies:
   animations: ^2.0.2
   table_calendar: ^3.0.3
   flutter_calendar_carousel: ^2.1.0
+  provider:
 
 dev_dependencies:
   flutter_test:

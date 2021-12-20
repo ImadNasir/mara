@@ -52,8 +52,13 @@ class _CantoState extends State<Canto> {
               height: 40.h,
               width: double.infinity,
               child: ListTile(
-                leading: InkWell(
-                  onTap: () {
+                leading: TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.only(),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -61,25 +66,44 @@ class _CantoState extends State<Canto> {
                       ),
                     );
                   },
-                  child: Icon(
-                    Icons.arrow_back_ios_outlined,
-                    color: Colors.white60,
+                  child: Container(
+                    width: 40.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      // color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Colors.white60,
+                    ),
                   ),
                 ),
                 title: Text(
                   widget.titleText,
                   style: TextStyle(
                       fontSize: 28.sp,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
-                subtitle: Text(
-                  widget.subtitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                    fontSize: 13.sp,
-                    backgroundColor: Color(0xFF2D2AF6),
+                subtitle: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    // width: double.,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: activeColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      widget.subtitle,
+                      style: TextStyle(
+                        // fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 11.sp,
+                        // backgroundColor: Color(0xFF2D2AF6),
+                      ),
+                    ),
                   ),
                 ),
               ),

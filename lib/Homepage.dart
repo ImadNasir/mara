@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mara/Canto.dart';
 import 'package:mara/Dibujo.dart';
+import 'package:mara/homescreenprovider.dart';
+import 'package:provider/provider.dart';
 import 'LeadingImage.dart';
 import 'Manualidad.dart';
 import 'calendar.dart';
@@ -34,815 +36,742 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         CurvedAnimation(parent: controller, curve: Interval(0.0, 1000.0)));
   }
 
-// flexAnimation = Tween(begin: 1, end: 2).animate(CurvedAnimation(parent: controller, curve: Interval(0.0, 0.5)));
-
-// In initState()
-// controller = AnimationController(vsync: this, duration: Duration(seconds: 3));
-  int isActive = 1;
+  // int model.model.isActive = 1;
+  // int model.isMonth = 1;
   @override
-  Widget build_cyclo(BuildContext context) {}
+  // Widget build_cyclo(BuildContext context) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: EdgeInsets.only(
-          top: 50.h,
-          bottom: 10.h,
-          left: 12.w,
-          right: 12.w,
-        ),
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10,
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Hoy, Lun 15",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28.sp,
-                ),
-              ),
+      body: Consumer<HomeScreenProvider>(
+        builder: (context, model, child) {
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            padding: EdgeInsets.only(
+              top: 50.h,
+              bottom: 10.h,
+              left: 12.w,
+              right: 12.w,
             ),
-
-            Row(
-              children: [
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 5000),
-                  child: Expanded(
-                    flex: isActive == 1
-                        ? flexAnimationEnd2Start.value
-                        : flexAnimationStart2End.value,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: isActive == 1
-                                ? EdgeInsets.zero
-                                : EdgeInsets.only(right: 10.w),
-                            child: CicloButton(
-                              text: "Ciclo 1",
-                              onPressed: () {
-                                setState(() {
-                                  isActive = 1;
-                                });
-                              },
-                              isActive: isActive == 1 ? true : false,
-                            ),
-                          ),
-                          // Container(
-                          //   // height: 40.h,
-                          //   // width: double.infinity,
-                          //   padding: EdgeInsets.symmetric(
-                          //       vertical: 7.h, horizontal: 15.w),
-                          //   alignment: Alignment.center,
-                          //   margin: EdgeInsets.only(
-                          //     left: 5.w,
-                          //     top: 5.h,
-                          //     bottom: 5.w,
-                          //   ),
-                          //   child: Text(
-                          //     'Ciclo 1',
-                          //     style: TextStyle(
-                          //       color: Colors.white,
-                          //       fontSize: 18.sp,
-                          //       fontWeight: FontWeight.w700,
-                          //     ),
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //       color: Color(0xFF2D2AF6),
-                          //       borderRadius: BorderRadius.circular(15.h)),
-                          // ),
-                        ),
-                        isActive == 1
-                            ? Container(
-                                padding: EdgeInsets.all(0.h),
-                                margin: EdgeInsets.all(0.h),
-                                child: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12.sp,
-                                  color: Colors.black54,
-                                ),
-                              )
-                            : SizedBox(),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: isActive == 2
-                      ? flexAnimationEnd2Start.value
-                      : flexAnimationStart2End.value,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: isActive == 2
-                              ? EdgeInsets.zero
-                              : EdgeInsets.only(
-                                  right: 8.0,
-                                ),
-                          child: CicloButton(
-                            text: "Ciclo 2",
-                            onPressed: () {
-                              setState(() {
-                                isActive = 2;
-                              });
-                            },
-                            isActive: isActive == 2 ? true : false,
-                          ),
-                        ),
-                      ),
-                      isActive == 2
-                          ? Container(
-                              padding: EdgeInsets.all(0.h),
-                              margin: EdgeInsets.all(0.h),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12.sp,
-                                color: Colors.black54,
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: isActive == 3
-                      ? flexAnimationEnd2Start.value
-                      : flexAnimationStart2End.value,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CicloButton(
-                          text: "Ciclo 3",
-                          onPressed: () {
-                            setState(() {
-                              isActive = 3;
-                            });
-                          },
-                          isActive: isActive == 3 ? true : false,
-                        ),
-                      ),
-                      isActive == 3
-                          ? Container(
-                              padding: EdgeInsets.all(0.h),
-                              margin: EdgeInsets.all(0.h),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12.sp,
-                                color: Colors.black54,
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                  // Container(
-                  //   margin: EdgeInsets.all(5.w),
-                  //   width: 65.w,
-                  //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                  //   alignment: Alignment.center,
-                  //   child: Text(
-                  //     'Ciclo 3',
-                  //     style: TextStyle(
-                  //         color: Colors.black,
-                  //         fontSize: 11.sp,
-                  //         fontWeight: FontWeight.w700),
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //     color: Color(0xFFEDECFF),
-                  //     borderRadius: BorderRadius.circular(
-                  //       12.h,
-                  //     ),
-                  //   ),
-                  // ),
-                )
-              ],
-            ),
-//--------- This is the Second Row, which shows months of the cycle-----//
-            Row(
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  // duration: Duration(milliseconds: 500),
-                  child: Expanded(
-                    flex: isActive == 1 ? 2 : 1,
-                    child: Container(
-                      margin: EdgeInsets.only(left: 10.w),
-                      padding: EdgeInsets.zero,
-                      decoration: BoxDecoration(
-                        // color: Colors.amber,
-                        borderRadius: BorderRadius.circular(
-                          12.h,
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Hoy, Lun 15",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 28.sp,
+                    ),
+                  ),
+                ),
+
+                Row(
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 5000),
+                      child: Expanded(
+                        flex: model.isActive == 1
+                            ? flexAnimationEnd2Start.value
+                            : flexAnimationStart2End.value,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: model.isActive == 1
+                                    ? EdgeInsets.zero
+                                    : EdgeInsets.only(right: 10.w),
+                                child: CicloButton(
+                                  text: "Ciclo 1",
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isActive = 1;
+                                      model.isMonth = 1;
+                                    });
+                                  },
+                                  isActive: model.isActive == 1 ? true : false,
+                                ),
+                              ),
+                              // Container(
+                              //   // height: 40.h,
+                              //   // width: double.infinity,
+                              //   padding: EdgeInsets.symmetric(
+                              //       vertical: 7.h, horizontal: 15.w),
+                              //   alignment: Alignment.center,
+                              //   margin: EdgeInsets.only(
+                              //     left: 5.w,
+                              //     top: 5.h,
+                              //     bottom: 5.w,
+                              //   ),
+                              //   child: Text(
+                              //     'Ciclo 1',
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontSize: 18.sp,
+                              //       fontWeight: FontWeight.w700,
+                              //     ),
+                              //   ),
+                              //   decoration: BoxDecoration(
+                              //       color: Color(0xFF2D2AF6),
+                              //       borderRadius: BorderRadius.circular(15.h)),
+                              // ),
+                            ),
+                            model.isActive == 1
+                                ? Container(
+                                    padding: EdgeInsets.all(0.h),
+                                    margin: EdgeInsets.all(0.h),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 12.sp,
+                                      color: Colors.black54,
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
                         ),
                       ),
-                      child: Stack(
-                        // fit: StackFit.loose,
+                    ),
+                    Expanded(
+                      flex: model.isActive == 2
+                          ? flexAnimationEnd2Start.value
+                          : flexAnimationStart2End.value,
+                      child: Row(
                         children: [
-                          AnimatedContainer(
-                            height: maxHeight,
-                            duration: Duration(milliseconds: duration),
-                            // curve: ,
-                            child: MonthButton(
-                              month: "Ene",
-                              onPressed: () {},
-                              isSelected: isActive == 1 ? true : false,
+                          Expanded(
+                            child: Padding(
+                              padding: model.isActive == 2
+                                  ? EdgeInsets.zero
+                                  : EdgeInsets.only(
+                                      right: 8.0,
+                                    ),
+                              child: CicloButton(
+                                text: "Ciclo 2",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 2;
+                                    model.isMonth = 5;
+                                  });
+                                },
+                                isActive: model.isActive == 2 ? true : false,
+                              ),
                             ),
                           ),
-                          AnimatedContainer(
-                            height: maxHeight,
-                            duration: Duration(milliseconds: duration),
-                            margin: isActive == 1
-                                ? EdgeInsets.only(left: 40.w)
-                                : EdgeInsets.only(left: 10.w),
-                            child: MonthButton(
-                              month: "Feb",
-                              onPressed: () {},
-                            ),
-                          ),
-                          AnimatedContainer(
-                            height: maxHeight,
-                            duration: Duration(milliseconds: duration),
-                            margin: isActive == 1
-                                ? EdgeInsets.only(left: 80.w)
-                                : EdgeInsets.only(left: 20.w),
-                            child: MonthButton(
-                              month: "Mar",
-                              onPressed: () {},
-                            ),
-                          ),
-                          AnimatedContainer(
-                            height: maxHeight,
-                            duration: Duration(milliseconds: duration),
-                            margin: isActive == 1
-                                ? EdgeInsets.only(left: 120.w)
-                                : EdgeInsets.only(left: 30.w),
-                            child: MonthButton(
-                              month: "Abr",
-                              onPressed: () {},
-                            ),
-                          ),
-                          // isActive == 1
-                          //     ? Container(
-                          //         padding: EdgeInsets.all(0.h),
-                          //         margin: EdgeInsets.all(0.h),
-                          //         child: Icon(
-                          //           Icons.arrow_forward_ios,
-                          //           size: 12.sp,
-                          //           color: Colors.black54,
-                          //         ),
-                          //       )
-                          //     : SizedBox(),
+                          model.isActive == 2
+                              ? Container(
+                                  padding: EdgeInsets.all(0.h),
+                                  margin: EdgeInsets.all(0.h),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 12.sp,
+                                    color: Colors.black54,
+                                  ),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: isActive == 2 ? 2 : 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10.w),
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                      // color: Colors.amber,
-                      borderRadius: BorderRadius.circular(
-                        12.h,
+                    Expanded(
+                      flex: model.isActive == 3
+                          ? flexAnimationEnd2Start.value
+                          : flexAnimationStart2End.value,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CicloButton(
+                              text: "Ciclo 3",
+                              onPressed: () {
+                                setState(() {
+                                  model.isActive = 3;
+                                  model.isMonth = 9;
+                                });
+                              },
+                              isActive: model.isActive == 3 ? true : false,
+                            ),
+                          ),
+                          model.isActive == 3
+                              ? Container(
+                                  padding: EdgeInsets.all(0.h),
+                                  margin: EdgeInsets.all(0.h),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 12.sp,
+                                    color: Colors.black54,
+                                  ),
+                                )
+                              : SizedBox(),
+                        ],
                       ),
-                    ),
-                    child: Stack(
-                      // mainAxisSize: MainAxisSize.min,
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          child: MonthButton(
-                            month: "May",
-                            onPressed: () {},
-                            isSelected: isActive == 2 ? true : false,
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 2
-                              ? EdgeInsets.only(left: 45.w)
-                              : EdgeInsets.only(left: 10.w),
-                          child: MonthButton(
-                            month: "Jun",
-                            onPressed: () {},
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 2
-                              ? EdgeInsets.only(left: 90.w)
-                              : EdgeInsets.only(left: 20.w),
-                          child: MonthButton(
-                            month: "Jul",
-                            onPressed: () {},
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 2
-                              ? EdgeInsets.only(left: 135.w)
-                              : EdgeInsets.only(left: 30.w),
-                          child: MonthButton(
-                            month: "Ago",
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      // Container(
+                      //   margin: EdgeInsets.all(5.w),
+                      //   width: 65.w,
+                      //   padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //   alignment: Alignment.center,
+                      //   child: Text(
+                      //     'Ciclo 3',
+                      //     style: TextStyle(
+                      //         color: Colors.black,
+                      //         fontSize: 11.sp,
+                      //         fontWeight: FontWeight.w700),
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     color: Color(0xFFEDECFF),
+                      //     borderRadius: BorderRadius.circular(
+                      //       12.h,
+                      //     ),
+                      //   ),
+                      // ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  flex: isActive == 3 ? 2 : 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10.w),
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                      // color: Colors.amber,
-                      borderRadius: BorderRadius.circular(
-                        12.h,
-                      ),
-                    ),
-                    child: Stack(
-                      // mainAxisSize: MainAxisSize.min,
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          // margin: EdgeInsets.only(left: 40.w),
-                          child: MonthButton(
-                            month: "Sept",
-                            onPressed: () {},
-                            isSelected: isActive == 3 ? true : false,
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 3
-                              ? EdgeInsets.only(left: 45.w)
-                              : EdgeInsets.only(left: 10.w),
-                          child: MonthButton(
-                            month: "Oct",
-                            onPressed: () {},
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 3
-                              ? EdgeInsets.only(left: 90.w)
-                              : EdgeInsets.only(left: 20.w),
-                          child: MonthButton(
-                            month: "Nov",
-                            onPressed: () {},
-                          ),
-                        ),
-                        AnimatedContainer(
-                          height: maxHeight,
-                          duration: Duration(milliseconds: duration),
-                          margin: isActive == 3
-                              ? EdgeInsets.only(left: 135.w)
-                              : EdgeInsets.only(left: 30.w),
-                          child: MonthButton(
-                            month: "Dic",
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              height: 90.h,
-              child: Calendar(),
-            ),
-            // SizedBox(
-            //   height: 60.h,
-            //   child: Row(
-            //     children: [
-            //       Expanded(
-            //         child: ListView.builder(
-            //           scrollDirection: Axis.horizontal,
-            //           itemBuilder: (_, index) {
-            //             return CalendarDay(
-            //               day: "Lu",
-            //               date: "${index + 1}",
-            //               isSelected: index == 0 ? true : false,
-            //             );
-            //           },
-            //           itemCount: 30,
-            //         ),
-            //       ),
-            //       // CalendarDay(
-            //       //   day: "Lun",
-            //       //   date: "15",
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Column(
-            //       //     children: [
-            //       //       Text(
-            //       //         '16',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 17.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //       Text(
-            //       //         'Lun',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 6.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //     ],
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //       color: Color(0xFFEDECFF),
-            //       //       borderRadius: BorderRadius.circular(15.h)),
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Column(
-            //       //     children: [
-            //       //       Text(
-            //       //         '17',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 17.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //       Text(
-            //       //         'Lun',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 6.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //     ],
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //       color: Color(0xFFEDECFF),
-            //       //       borderRadius: BorderRadius.circular(15.h)),
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Column(
-            //       //     children: [
-            //       //       Text(
-            //       //         '18',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 17.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //       Text(
-            //       //         'Lun',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 6.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //     ],
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //       color: Color(0xFFEDECFF),
-            //       //       borderRadius: BorderRadius.circular(15.h)),
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Container(
-            //       //     child: Column(
-            //       //       children: [
-            //       //         Text(
-            //       //           '19',
-            //       //           style: TextStyle(
-            //       //               color: Colors.black,
-            //       //               fontSize: 17.sp,
-            //       //               fontWeight: FontWeight.w700),
-            //       //         ),
-            //       //         Text(
-            //       //           'Lun',
-            //       //           style: TextStyle(
-            //       //               color: Colors.black,
-            //       //               fontSize: 6.sp,
-            //       //               fontWeight: FontWeight.w700),
-            //       //         ),
-            //       //       ],
-            //       //     ),
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //       color: Color(0xFFEDECFF),
-            //       //       borderRadius: BorderRadius.circular(15.h)),
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Column(
-            //       //     children: [
-            //       //       Text(
-            //       //         '20',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 17.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //       Text(
-            //       //         'Lun',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 6.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //     ],
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //     color: Color(0xFFEDECFF),
-            //       //     borderRadius: BorderRadius.circular(15.h),
-            //       //   ),
-            //       // ),
-            //       // Container(
-            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-            //       //   width: 46.w,
-            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
-            //       //   alignment: Alignment.center,
-            //       //   child: Column(
-            //       //     children: [
-            //       //       Text(
-            //       //         '21',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 17.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //       Text(
-            //       //         'Lun',
-            //       //         style: TextStyle(
-            //       //             color: Colors.black,
-            //       //             fontSize: 6.sp,
-            //       //             fontWeight: FontWeight.w700),
-            //       //       ),
-            //       //     ],
-            //       //   ),
-            //       //   decoration: BoxDecoration(
-            //       //     color: Color(0xFFEDECFF),
-            //       //     borderRadius: BorderRadius.circular(15.h),
-            //       //   ),
-            //       // ),
-            //     ],
-            //   ),
-            // ),
-
-            SizedBox(
-              height: 20.h,
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.h, left: 10.w, bottom: 1.h),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Actividades de hoy",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28.sp,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                left: 10.h,
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Doctrina: Reconciliación - 14',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp),
-              ),
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+//--------- This is the Second Row, which shows months of the cycle-----//
+                Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5.h),
-                      alignment: Alignment.centerLeft,
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Canto(
-                                      imageli: 'Assets/Images/Canto.jpg',
-                                      titleText: 'Canto',
-                                      subtitle: 'Canto a la Virgen María')));
-                        },
-                        leading: LeadingImage(
-                          imagelink: 'Assets/IconImage/karaoke.jpg',
-                        ),
-                        title: Text(
-                          'Canto y oración',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 18.sp),
-                        ),
-                        subtitle: Text(
-                          'Canto a la Virgen María | Ver. 22',
-                          style: TextStyle(fontSize: 11.sp),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.h),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5.sp,
-                            blurRadius: 7.sp,
-                            offset: Offset(0, 2), // changes position of shadow
+                      // duration: Duration(milliseconds: 500),
+                      child: Expanded(
+                        flex: model.isActive == 1 ? 2 : 1,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 10.w),
+                          padding: EdgeInsets.zero,
+                          decoration: BoxDecoration(
+                            // color: Colors.amber,
+                            borderRadius: BorderRadius.circular(
+                              12.h,
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(5.h),
-                      alignment: Alignment.centerLeft,
-                      child: ListTile(
-                        onTap: () {
-                          //
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Canto(
-                                        imageli: 'Assets/Images/lectura.jpg',
-                                        titleText: 'Lectura',
-                                        subtitle: 'Lectura del evangelio 23:46',
-                                      )));
-                        },
-                        leading: LeadingImage(
-                          imagelink: 'Assets/IconImage/reading-book.png',
-                        ),
-                        title: Text(
-                          'Lectura',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 18.sp),
-                        ),
-                        subtitle: Text(
-                          'Lectura del Evangelio 23:56',
-                          style: TextStyle(fontSize: 11.sp),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.h),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5.sp,
-                            blurRadius: 7.sp,
-                            offset: Offset(0, 2), // changes position of shadow
+                          child: Stack(
+                            // fit: StackFit.loose,
+                            children: [
+                              AnimatedContainer(
+                                height: maxHeight,
+                                duration: Duration(milliseconds: duration),
+                                // curve: ,
+                                child: MonthButton(
+                                  month: "Ene",
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isActive = 1;
+                                      model.isMonth = 1;
+                                    });
+                                  },
+                                  isSelected: model.isActive == 1
+                                      ? model.isMonth == 1
+                                          ? true
+                                          : false
+                                      : false,
+                                ),
+                              ),
+                              AnimatedContainer(
+                                height: maxHeight,
+                                duration: Duration(milliseconds: duration),
+                                margin: model.isActive == 1
+                                    ? EdgeInsets.only(left: 40.w)
+                                    : EdgeInsets.only(left: 10.w),
+                                child: MonthButton(
+                                  month: "Feb",
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isActive = 1;
+                                      model.isMonth = 2;
+                                    });
+                                  },
+                                  isSelected: model.isActive == 1
+                                      ? model.isMonth == 2
+                                          ? true
+                                          : false
+                                      : false,
+                                ),
+                              ),
+                              AnimatedContainer(
+                                height: maxHeight,
+                                duration: Duration(milliseconds: duration),
+                                margin: model.isActive == 1
+                                    ? EdgeInsets.only(left: 80.w)
+                                    : EdgeInsets.only(left: 20.w),
+                                child: MonthButton(
+                                  month: "Mar",
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isActive = 1;
+                                      model.isMonth = 3;
+                                    });
+                                  },
+                                  isSelected: model.isActive == 1
+                                      ? model.isMonth == 3
+                                          ? true
+                                          : false
+                                      : false,
+                                ),
+                              ),
+                              AnimatedContainer(
+                                height: maxHeight,
+                                duration: Duration(milliseconds: duration),
+                                margin: model.isActive == 1
+                                    ? EdgeInsets.only(left: 120.w)
+                                    : EdgeInsets.only(left: 30.w),
+                                child: MonthButton(
+                                  month: "Abr",
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isActive = 1;
+                                      model.isMonth = 4;
+                                    });
+                                  },
+                                  isSelected: model.isActive == 1
+                                      ? model.isMonth == 4
+                                          ? true
+                                          : false
+                                      : false,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(5.sp),
-                      alignment: Alignment.centerLeft,
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Dibujo()));
-                        },
-                        leading: LeadingImage(
-                          imagelink: 'Assets/IconImage/color.png',
-                        ),
-                        title: Text(
-                          'Dibujo',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 18.sp),
-                        ),
-                        subtitle: Text(
-                          'Para colorear',
-                          style: TextStyle(fontSize: 11.sp),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.h),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5.sp,
-                            blurRadius: 7.sp,
-                            offset: Offset(0, 3), // changes position of shadow
+                    ),
+                    Expanded(
+                      flex: model.isActive == 2 ? 2 : 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10.w),
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          // color: Colors.amber,
+                          borderRadius: BorderRadius.circular(
+                            12.h,
                           ),
-                        ],
+                        ),
+                        child: Stack(
+                          // mainAxisSize: MainAxisSize.min,
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              child: MonthButton(
+                                month: "May",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 2;
+                                    model.isMonth = 5;
+                                  });
+                                },
+                                isSelected: model.isActive == 2
+                                    ? model.isMonth == 5
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 2
+                                  ? EdgeInsets.only(left: 45.w)
+                                  : EdgeInsets.only(left: 10.w),
+                              child: MonthButton(
+                                month: "Jun",
+                                onPressed: () {
+                                  model.isActive = 2;
+                                  setState(() {
+                                    model.isMonth = 6;
+                                  });
+                                },
+                                isSelected: model.isActive == 2
+                                    ? model.isMonth == 6
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 2
+                                  ? EdgeInsets.only(left: 90.w)
+                                  : EdgeInsets.only(left: 20.w),
+                              child: MonthButton(
+                                month: "Jul",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 2;
+                                    model.isMonth = 7;
+                                  });
+                                },
+                                isSelected: model.isActive == 2
+                                    ? model.isMonth == 7
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 2
+                                  ? EdgeInsets.only(left: 135.w)
+                                  : EdgeInsets.only(left: 30.w),
+                              child: MonthButton(
+                                month: "Ago",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 2;
+                                    model.isMonth = 8;
+                                  });
+                                },
+                                isSelected: model.isActive == 2
+                                    ? model.isMonth == 8
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(5.h),
-                      alignment: Alignment.centerLeft,
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Manualidad()));
-                        },
-                        leading: LeadingImage(
-                          imagelink: 'Assets/IconImage/paper-crafts.png',
-                        ),
-                        title: Text(
-                          'Manualidad',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900, fontSize: 18.sp),
-                        ),
-                        subtitle: Text(
-                          'Manualidad sencilla para todos',
-                          style: TextStyle(fontSize: 11.sp),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15.h),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 5.sp,
-                            blurRadius: 7.sp,
-                            offset: Offset(0, 3), // changes position of shadow
+                    Expanded(
+                      flex: model.isActive == 3 ? 2 : 1,
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10.w),
+                        padding: EdgeInsets.zero,
+                        decoration: BoxDecoration(
+                          // color: Colors.amber,
+                          borderRadius: BorderRadius.circular(
+                            12.h,
                           ),
-                        ],
+                        ),
+                        child: Stack(
+                          // mainAxisSize: MainAxisSize.min,
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              // margin: EdgeInsets.only(left: 40.w),
+                              child: MonthButton(
+                                month: "Sept",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 3;
+                                    model.isMonth = 9;
+                                  });
+                                },
+                                isSelected: model.isActive == 3
+                                    ? model.isMonth == 9
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 3
+                                  ? EdgeInsets.only(left: 45.w)
+                                  : EdgeInsets.only(left: 10.w),
+                              child: MonthButton(
+                                month: "Oct",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 3;
+                                    model.isMonth = 10;
+                                  });
+                                },
+                                isSelected: model.isActive == 3
+                                    ? model.isMonth == 10
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 3
+                                  ? EdgeInsets.only(left: 90.w)
+                                  : EdgeInsets.only(left: 20.w),
+                              child: MonthButton(
+                                month: "Nov",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 3;
+                                    model.isMonth = 11;
+                                  });
+                                },
+                                isSelected: model.isActive == 3
+                                    ? model.isMonth == 11
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                            AnimatedContainer(
+                              height: maxHeight,
+                              duration: Duration(milliseconds: duration),
+                              margin: model.isActive == 3
+                                  ? EdgeInsets.only(left: 135.w)
+                                  : EdgeInsets.only(left: 30.w),
+                              child: MonthButton(
+                                month: "Dic",
+                                onPressed: () {
+                                  setState(() {
+                                    model.isActive = 3;
+                                    model.isMonth = 12;
+                                  });
+                                },
+                                isSelected: model.isActive == 3
+                                    ? model.isMonth == 12
+                                        ? true
+                                        : false
+                                    : false,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            )
-          ],
-        ),
+                Container(
+                  key: UniqueKey(),
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  height: 90.h,
+                  child: Calendar(
+                    month: model.isMonth,
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(top: 20.h, left: 10.w, bottom: 1.h),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Actividades de hoy",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 28.sp,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: 10.h,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Doctrina: Reconciliación - 14',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15.sp),
+                  ),
+                ),
+                SizedBox(
+                  height: 40.h,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(5.h),
+                          alignment: Alignment.centerLeft,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Canto(
+                                          imageli: 'Assets/Images/Canto.jpg',
+                                          titleText: 'Canto',
+                                          subtitle:
+                                              'Canto a la Virgen María')));
+                            },
+                            leading: LeadingImage(
+                              imagelink: 'Assets/IconImage/karaoke.jpg',
+                            ),
+                            title: Text(
+                              'Canto y oración',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 18.sp),
+                            ),
+                            subtitle: Text(
+                              'Canto a la Virgen María | Ver. 22',
+                              style: TextStyle(fontSize: 11.sp),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.h),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5.sp,
+                                blurRadius: 7.sp,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5.h),
+                          alignment: Alignment.centerLeft,
+                          child: ListTile(
+                            onTap: () {
+                              //
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Canto(
+                                            imageli:
+                                                'Assets/Images/lectura.jpg',
+                                            titleText: 'Lectura',
+                                            subtitle:
+                                                'Lectura del evangelio 23:46',
+                                          )));
+                            },
+                            leading: LeadingImage(
+                              imagelink: 'Assets/IconImage/reading-book.png',
+                            ),
+                            title: Text(
+                              'Lectura',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 18.sp),
+                            ),
+                            subtitle: Text(
+                              'Lectura del Evangelio 23:56',
+                              style: TextStyle(fontSize: 11.sp),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.h),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5.sp,
+                                blurRadius: 7.sp,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5.sp),
+                          alignment: Alignment.centerLeft,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dibujo()));
+                            },
+                            leading: LeadingImage(
+                              imagelink: 'Assets/IconImage/color.png',
+                            ),
+                            title: Text(
+                              'Dibujo',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 18.sp),
+                            ),
+                            subtitle: Text(
+                              'Para colorear',
+                              style: TextStyle(fontSize: 11.sp),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.h),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5.sp,
+                                blurRadius: 7.sp,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5.h),
+                          alignment: Alignment.centerLeft,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Manualidad()));
+                            },
+                            leading: LeadingImage(
+                              imagelink: 'Assets/IconImage/paper-crafts.png',
+                            ),
+                            title: Text(
+                              'Manualidad',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 18.sp),
+                            ),
+                            subtitle: Text(
+                              'Manualidad sencilla para todos',
+                              style: TextStyle(fontSize: 11.sp),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.h),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 5.sp,
+                                blurRadius: 7.sp,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
