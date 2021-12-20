@@ -5,13 +5,39 @@ import 'package:mara/Canto.dart';
 import 'package:mara/Dibujo.dart';
 import 'LeadingImage.dart';
 import 'Manualidad.dart';
+import 'calendar.dart';
+
+const activeColor = Color(0xFF2D2AF6);
+const inactiveColor = Color(0xFFEDECFF);
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation flexAnimationStart2End;
+  Animation flexAnimationEnd2Start;
+  double maxHeight = 35.h;
+  int duration = 500;
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 30),
+    );
+    flexAnimationStart2End = Tween(begin: 1, end: 2).animate(
+        CurvedAnimation(parent: controller, curve: Interval(0.0, 1000.0)));
+    flexAnimationEnd2Start = Tween(begin: 2, end: 1).animate(
+        CurvedAnimation(parent: controller, curve: Interval(0.0, 1000.0)));
+  }
+
+// flexAnimation = Tween(begin: 1, end: 2).animate(CurvedAnimation(parent: controller, curve: Interval(0.0, 0.5)));
+
+// In initState()
+// controller = AnimationController(vsync: this, duration: Duration(seconds: 3));
   int isActive = 1;
   @override
   Widget build_cyclo(BuildContext context) {}
@@ -51,65 +77,72 @@ class _HomePageState extends State<HomePage> {
 
             Row(
               children: [
-                Expanded(
-                  flex: isActive == 1 ? 2 : 1,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: isActive == 1
-                              ? EdgeInsets.zero
-                              : EdgeInsets.only(right: 10.w),
-                          child: CicloButton(
-                            text: "Ciclo 1",
-                            onPressed: () {
-                              setState(() {
-                                isActive = 1;
-                              });
-                            },
-                            isActive: isActive == 1 ? true : false,
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 5000),
+                  child: Expanded(
+                    flex: isActive == 1
+                        ? flexAnimationEnd2Start.value
+                        : flexAnimationStart2End.value,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: isActive == 1
+                                ? EdgeInsets.zero
+                                : EdgeInsets.only(right: 10.w),
+                            child: CicloButton(
+                              text: "Ciclo 1",
+                              onPressed: () {
+                                setState(() {
+                                  isActive = 1;
+                                });
+                              },
+                              isActive: isActive == 1 ? true : false,
+                            ),
                           ),
+                          // Container(
+                          //   // height: 40.h,
+                          //   // width: double.infinity,
+                          //   padding: EdgeInsets.symmetric(
+                          //       vertical: 7.h, horizontal: 15.w),
+                          //   alignment: Alignment.center,
+                          //   margin: EdgeInsets.only(
+                          //     left: 5.w,
+                          //     top: 5.h,
+                          //     bottom: 5.w,
+                          //   ),
+                          //   child: Text(
+                          //     'Ciclo 1',
+                          //     style: TextStyle(
+                          //       color: Colors.white,
+                          //       fontSize: 18.sp,
+                          //       fontWeight: FontWeight.w700,
+                          //     ),
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //       color: Color(0xFF2D2AF6),
+                          //       borderRadius: BorderRadius.circular(15.h)),
+                          // ),
                         ),
-                        // Container(
-                        //   // height: 40.h,
-                        //   // width: double.infinity,
-                        //   padding: EdgeInsets.symmetric(
-                        //       vertical: 7.h, horizontal: 15.w),
-                        //   alignment: Alignment.center,
-                        //   margin: EdgeInsets.only(
-                        //     left: 5.w,
-                        //     top: 5.h,
-                        //     bottom: 5.w,
-                        //   ),
-                        //   child: Text(
-                        //     'Ciclo 1',
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 18.sp,
-                        //       fontWeight: FontWeight.w700,
-                        //     ),
-                        //   ),
-                        //   decoration: BoxDecoration(
-                        //       color: Color(0xFF2D2AF6),
-                        //       borderRadius: BorderRadius.circular(15.h)),
-                        // ),
-                      ),
-                      isActive == 1
-                          ? Container(
-                              padding: EdgeInsets.all(0.h),
-                              margin: EdgeInsets.all(0.h),
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 12.sp,
-                                color: Colors.black54,
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
+                        isActive == 1
+                            ? Container(
+                                padding: EdgeInsets.all(0.h),
+                                margin: EdgeInsets.all(0.h),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 12.sp,
+                                  color: Colors.black54,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
-                  flex: isActive == 2 ? 2 : 1,
+                  flex: isActive == 2
+                      ? flexAnimationEnd2Start.value
+                      : flexAnimationStart2End.value,
                   child: Row(
                     children: [
                       Expanded(
@@ -145,7 +178,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                  flex: isActive == 3 ? 2 : 1,
+                  flex: isActive == 3
+                      ? flexAnimationEnd2Start.value
+                      : flexAnimationStart2End.value,
                   child: Row(
                     children: [
                       Expanded(
@@ -197,64 +232,78 @@ class _HomePageState extends State<HomePage> {
 //--------- This is the Second Row, which shows months of the cycle-----//
             Row(
               children: [
-                Expanded(
-                  flex: isActive == 1 ? 2 : 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10.w),
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                      // color: Colors.amber,
-                      borderRadius: BorderRadius.circular(
-                        12.h,
+                Container(
+                  // duration: Duration(milliseconds: 500),
+                  child: Expanded(
+                    flex: isActive == 1 ? 2 : 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10.w),
+                      padding: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        // color: Colors.amber,
+                        borderRadius: BorderRadius.circular(
+                          12.h,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Container(
-                          child: MonthButton(
-                            month: "Ene",
-                            onPressed: () {},
+                      child: Stack(
+                        // fit: StackFit.loose,
+                        children: [
+                          AnimatedContainer(
+                            height: maxHeight,
+                            duration: Duration(milliseconds: duration),
+                            // curve: ,
+                            child: MonthButton(
+                              month: "Ene",
+                              onPressed: () {},
+                              isSelected: isActive == 1 ? true : false,
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: isActive == 1
-                              ? EdgeInsets.only(left: 40.w)
-                              : EdgeInsets.only(left: 10.w),
-                          child: MonthButton(
-                            month: "Feb",
-                            onPressed: () {},
+                          AnimatedContainer(
+                            height: maxHeight,
+                            duration: Duration(milliseconds: duration),
+                            margin: isActive == 1
+                                ? EdgeInsets.only(left: 40.w)
+                                : EdgeInsets.only(left: 10.w),
+                            child: MonthButton(
+                              month: "Feb",
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: isActive == 1
-                              ? EdgeInsets.only(left: 80.w)
-                              : EdgeInsets.only(left: 20.w),
-                          child: MonthButton(
-                            month: "Mar",
-                            onPressed: () {},
+                          AnimatedContainer(
+                            height: maxHeight,
+                            duration: Duration(milliseconds: duration),
+                            margin: isActive == 1
+                                ? EdgeInsets.only(left: 80.w)
+                                : EdgeInsets.only(left: 20.w),
+                            child: MonthButton(
+                              month: "Mar",
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: isActive == 1
-                              ? EdgeInsets.only(left: 120.w)
-                              : EdgeInsets.only(left: 30.w),
-                          child: MonthButton(
-                            month: "Abr",
-                            onPressed: () {},
+                          AnimatedContainer(
+                            height: maxHeight,
+                            duration: Duration(milliseconds: duration),
+                            margin: isActive == 1
+                                ? EdgeInsets.only(left: 120.w)
+                                : EdgeInsets.only(left: 30.w),
+                            child: MonthButton(
+                              month: "Abr",
+                              onPressed: () {},
+                            ),
                           ),
-                        ),
-                        // isActive == 1
-                        //     ? Container(
-                        //         padding: EdgeInsets.all(0.h),
-                        //         margin: EdgeInsets.all(0.h),
-                        //         child: Icon(
-                        //           Icons.arrow_forward_ios,
-                        //           size: 12.sp,
-                        //           color: Colors.black54,
-                        //         ),
-                        //       )
-                        //     : SizedBox(),
-                      ],
+                          // isActive == 1
+                          //     ? Container(
+                          //         padding: EdgeInsets.all(0.h),
+                          //         margin: EdgeInsets.all(0.h),
+                          //         child: Icon(
+                          //           Icons.arrow_forward_ios,
+                          //           size: 12.sp,
+                          //           color: Colors.black54,
+                          //         ),
+                          //       )
+                          //     : SizedBox(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -273,14 +322,18 @@ class _HomePageState extends State<HomePage> {
                       // mainAxisSize: MainAxisSize.min,
                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          // margin: EdgeInsets.only(left: 40.w),
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           child: MonthButton(
                             month: "May",
                             onPressed: () {},
+                            isSelected: isActive == 2 ? true : false,
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 2
                               ? EdgeInsets.only(left: 45.w)
                               : EdgeInsets.only(left: 10.w),
@@ -289,7 +342,9 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 2
                               ? EdgeInsets.only(left: 90.w)
                               : EdgeInsets.only(left: 20.w),
@@ -298,7 +353,9 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 2
                               ? EdgeInsets.only(left: 135.w)
                               : EdgeInsets.only(left: 30.w),
@@ -326,14 +383,19 @@ class _HomePageState extends State<HomePage> {
                       // mainAxisSize: MainAxisSize.min,
                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           // margin: EdgeInsets.only(left: 40.w),
                           child: MonthButton(
                             month: "Sept",
                             onPressed: () {},
+                            isSelected: isActive == 3 ? true : false,
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 3
                               ? EdgeInsets.only(left: 45.w)
                               : EdgeInsets.only(left: 10.w),
@@ -342,7 +404,9 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 3
                               ? EdgeInsets.only(left: 90.w)
                               : EdgeInsets.only(left: 20.w),
@@ -351,7 +415,9 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                           ),
                         ),
-                        Container(
+                        AnimatedContainer(
+                          height: maxHeight,
+                          duration: Duration(milliseconds: duration),
                           margin: isActive == 3
                               ? EdgeInsets.only(left: 135.w)
                               : EdgeInsets.only(left: 30.w),
@@ -364,304 +430,205 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              height: 90.h,
+              child: Calendar(),
+            ),
+            // SizedBox(
+            //   height: 60.h,
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemBuilder: (_, index) {
+            //             return CalendarDay(
+            //               day: "Lu",
+            //               date: "${index + 1}",
+            //               isSelected: index == 0 ? true : false,
+            //             );
+            //           },
+            //           itemCount: 30,
+            //         ),
+            //       ),
+            //       // CalendarDay(
+            //       //   day: "Lun",
+            //       //   date: "15",
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Column(
+            //       //     children: [
+            //       //       Text(
+            //       //         '16',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 17.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //       Text(
+            //       //         'Lun',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 6.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //     ],
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //       color: Color(0xFFEDECFF),
+            //       //       borderRadius: BorderRadius.circular(15.h)),
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Column(
+            //       //     children: [
+            //       //       Text(
+            //       //         '17',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 17.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //       Text(
+            //       //         'Lun',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 6.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //     ],
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //       color: Color(0xFFEDECFF),
+            //       //       borderRadius: BorderRadius.circular(15.h)),
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Column(
+            //       //     children: [
+            //       //       Text(
+            //       //         '18',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 17.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //       Text(
+            //       //         'Lun',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 6.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //     ],
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //       color: Color(0xFFEDECFF),
+            //       //       borderRadius: BorderRadius.circular(15.h)),
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Container(
+            //       //     child: Column(
+            //       //       children: [
+            //       //         Text(
+            //       //           '19',
+            //       //           style: TextStyle(
+            //       //               color: Colors.black,
+            //       //               fontSize: 17.sp,
+            //       //               fontWeight: FontWeight.w700),
+            //       //         ),
+            //       //         Text(
+            //       //           'Lun',
+            //       //           style: TextStyle(
+            //       //               color: Colors.black,
+            //       //               fontSize: 6.sp,
+            //       //               fontWeight: FontWeight.w700),
+            //       //         ),
+            //       //       ],
+            //       //     ),
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //       color: Color(0xFFEDECFF),
+            //       //       borderRadius: BorderRadius.circular(15.h)),
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Column(
+            //       //     children: [
+            //       //       Text(
+            //       //         '20',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 17.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //       Text(
+            //       //         'Lun',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 6.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //     ],
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //     color: Color(0xFFEDECFF),
+            //       //     borderRadius: BorderRadius.circular(15.h),
+            //       //   ),
+            //       // ),
+            //       // Container(
+            //       //   margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+            //       //   width: 46.w,
+            //       //   padding: EdgeInsets.symmetric(vertical: 10.h),
+            //       //   alignment: Alignment.center,
+            //       //   child: Column(
+            //       //     children: [
+            //       //       Text(
+            //       //         '21',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 17.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //       Text(
+            //       //         'Lun',
+            //       //         style: TextStyle(
+            //       //             color: Colors.black,
+            //       //             fontSize: 6.sp,
+            //       //             fontWeight: FontWeight.w700),
+            //       //       ),
+            //       //     ],
+            //       //   ),
+            //       //   decoration: BoxDecoration(
+            //       //     color: Color(0xFFEDECFF),
+            //       //     borderRadius: BorderRadius.circular(15.h),
+            //       //   ),
+            //       // ),
+            //     ],
+            //   ),
+            // ),
 
-                // Expanded(
-                //   flex: 1,
-                //   child: Text("asdf"),
-                // ),
-                // Expanded(
-                //   flex: 1,
-                //   child: Text("asdf"),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.all(5.w),
-                //   width: 47.w,
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     'Feb',
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 11.sp,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: Color(0xFFEDECFF),
-                //       borderRadius: BorderRadius.circular(20.h)),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.all(5.w),
-                //   width: 47.w,
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     'Mar',
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 11.sp,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: Color(0xFFEDECFF),
-                //       borderRadius: BorderRadius.circular(20.h)),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.all(5.w),
-                //   width: 47.w,
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     'Abr',
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 11.sp,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: Color(0xFFEDECFF),
-                //       borderRadius: BorderRadius.circular(20.h)),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.all(5.w),
-                //   width: 63.w,
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   alignment: Alignment.center,
-                //   child: Container(
-                //     child: Text(
-                //       'mayo',
-                //       style: TextStyle(
-                //           color: Colors.black,
-                //           fontSize: 11.sp,
-                //           fontWeight: FontWeight.w700),
-                //     ),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: Color(0xFFEDECFF),
-                //       borderRadius: BorderRadius.circular(20.h),
-                //       border: Border.all(
-                //         color: Color(0xFFBDBCEFF),
-                //         width: 1,
-                //       )),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.all(5.w),
-                //   width: 63.w,
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     'jun',
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 11.sp,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                //   decoration: BoxDecoration(
-                //       color: Color(0xFFEDECFF),
-                //       borderRadius: BorderRadius.circular(20.h),
-                //       border: Border.all(
-                //         color: Color(0xFFBDBCEFF),
-                //         width: 1,
-                //       )),
-                // ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '15',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF2D2AF6),
-                      borderRadius: BorderRadius.circular(15.h)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '16',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFEDECFF),
-                      borderRadius: BorderRadius.circular(15.h)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '17',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFEDECFF),
-                      borderRadius: BorderRadius.circular(15.h)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '18',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFEDECFF),
-                      borderRadius: BorderRadius.circular(15.h)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          '19',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'Lun',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 6.sp,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFEDECFF),
-                      borderRadius: BorderRadius.circular(15.h)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '20',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEDECFF),
-                    borderRadius: BorderRadius.circular(15.h),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
-                  width: 46.w,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Text(
-                        '21',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Lun',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 6.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEDECFF),
-                    borderRadius: BorderRadius.circular(15.h),
-                  ),
-                ),
-              ],
-            ),
             SizedBox(
               height: 20.h,
             ),
@@ -671,9 +638,10 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 "Actividades de hoy",
                 style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28.sp),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28.sp,
+                ),
               ),
             ),
             Container(
@@ -880,18 +848,59 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+class CalendarDay extends StatelessWidget {
+  final String day;
+  final String date;
+  final String year;
+  // final String dayOfWeek
+  final bool isSelected;
+  CalendarDay({this.day, this.date, this.year, this.isSelected});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 3.w),
+      width: 46.w,
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          Text(
+            date,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            day,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontSize: 6.sp,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: isSelected ? Color(0xFF2D2AF6) : Color(0xFFEDECFF),
+        borderRadius: BorderRadius.circular(15.h),
+      ),
+    );
+  }
+}
+
 class MonthButton extends StatelessWidget {
   final String month;
   final Function onPressed;
-  MonthButton({this.month, this.onPressed});
+  bool isSelected;
+  MonthButton({this.month, this.onPressed, this.isSelected = false});
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
         minimumSize: Size.zero,
-        padding: EdgeInsets.only(
-            // left: 10.w,
-            ),
+        padding: EdgeInsets.only(),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       onPressed: onPressed,
@@ -901,13 +910,13 @@ class MonthButton extends StatelessWidget {
         child: Text(
           month,
           style: TextStyle(
-            color: Colors.white,
+            color: isSelected ? Colors.white : Colors.black,
             fontSize: 10.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
         decoration: BoxDecoration(
-          color: Color(0xFF2D2AF6),
+          color: isSelected ? Color(0xFF2D2AF6) : Color(0xFFEDECFF),
           border: Border.all(
             color: Colors.white,
             width: 1.h,
@@ -936,7 +945,8 @@ class CicloButton extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       onPressed: onPressed,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 1000),
         padding: EdgeInsets.symmetric(vertical: 10.h),
         alignment: Alignment.center,
         child: Text(
