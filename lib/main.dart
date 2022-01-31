@@ -9,7 +9,14 @@ import 'Homepage.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      // apiKey: "XXX",
+      appId: "com.example.mara",
+      // messagingSenderId: "XXX",
+      // projectId: "XXX",
+    ),
+  );
 
 
   runApp(MultiProvider(
@@ -41,4 +48,5 @@ void main() async {
               );
             })),
   ));
+
 }
